@@ -32,14 +32,14 @@ When(/I check the following ratings: (.*)/) do |rating_list|
   #   "When I uncheck..." steps in lines 89-95 of web_steps.rb
   rating_list.split(',').map(&:strip).each do |rating|
     checkbox = find("#ratings_#{rating}")
-    check(checkbox) unless checkbox.checked?
+    checkbox.set(true) unless checkbox.checked?
   end
 end
 
 When(/I uncheck the following ratings: (.*)/) do |rating_list|
   rating_list.split(',').map(&:strip).each do |rating|
     checkbox = find("#ratings_#{rating}")
-    uncheck(checkbox) if checkbox.checked?
+    checkbox.set(false) if checkbox.checked?
   end
 end
 
