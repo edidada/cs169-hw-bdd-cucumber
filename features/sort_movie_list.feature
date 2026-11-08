@@ -35,5 +35,5 @@ Scenario: sort movies in increasing order of release date
   # your steps here
   And I press "Refresh"
   Then I should see "2001: A Space Odyssey" before "Aladdin" in the movie list
+  Then I should see "The Terminator" before "Chicken Run" in the movie list
   Then I should see "Aladdin" before "The Help" in the movie list
-  Then I should see "The Help" before "The Terminator" in the movie list
