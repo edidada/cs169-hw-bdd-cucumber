@@ -1,0 +1,34 @@
+name: CS169 hw-bdd-cucumber
+on:
+  push:
+    branches: [edidada/cs169-hw]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cucumber:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: false
+      - name: Install gems and prepare database
+        run: |
+          bundle install
+          bundle exec rails db:create db:migrate RAILS_ENV=test
+      - name: Run all cucumber features
+        env:
+          TERM: dumb
+        run: bundle exec cucumber
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bdd-results
+          path: |
+            features/**/*.feature
+            features/**/*.rb
+          if-no-files-found: warn
